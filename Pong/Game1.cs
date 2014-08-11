@@ -107,6 +107,8 @@ namespace Pong
 
             // Collision system / Collision manager, returns collision pairs?
 
+            // Sound for collision and for score
+
             checkCollisions();
 
             score.Update(computer.Score.ToString(), player.Score.ToString());
