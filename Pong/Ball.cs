@@ -12,9 +12,8 @@ namespace Pong
         private Vector2 position;
         private Vector2 originalPosition;
         private Texture2D texture;
-
-        public Vector2 direction;
-        public Vector2 speed;
+        private Vector2 direction;
+        private Vector2 speed;
 
         private Random rand = new Random();
 
@@ -44,12 +43,12 @@ namespace Pong
             direction.Y = -direction.Y;
         }
 
-        public void Update(Microsoft.Xna.Framework.GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
             position += direction * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
         }
 
-        public void Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture, position, Color.White);
         }

@@ -16,11 +16,13 @@ namespace Pong
     /// </summary>
     public class Game1 : Game
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
-        Texture2D texture;
-        Ball ball;
-        ScoreScreen score;
+        private GraphicsDeviceManager graphics;
+        private SpriteBatch spriteBatch;
+        private Texture2D texture;
+        private Ball ball;
+        private ScoreScreen score;
+        private PlayerPaddle player;
+        private ComputerPaddle computer;
 
         private SpriteFont font;
         
@@ -68,6 +70,9 @@ namespace Pong
 
             ball = new Ball(texture, new Vector2(390, 290));
             score = new ScoreScreen(font, new Vector2(gameWidth * 0.25F, gameHeight * 0.45F), new Vector2(gameWidth * 0.75F, gameHeight * 0.45F));
+
+            throw new NotImplementedException("paddle texture");
+            throw new NotImplementedException("player and computer paddle");
         }
         /*
         protected Texture2D CreateTexture()
@@ -115,6 +120,8 @@ namespace Pong
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            throw new NotImplementedException("input handling for player");
+
             ball.Update(gameTime);
 
             checkCollisions();
@@ -126,20 +133,22 @@ namespace Pong
 
         private void checkCollisions()
         {
-            if (ball.Position.X > gameWidth)
+            if (ball.Position.X > gameWidth) 
             {
-                playerLeftScore++;
+                computer.Score++;
                 ball.Reset();
             }
-            else if (ball.Position.X < 0)
+            else if (ball.Position.X < 0) 
             {
-                playerRightScore++;
+                player.Score++;
                 ball.Reset();
             }
             else if (ball.Position.Y > gameHeight - 20 || ball.Position.Y < 0)
             {
                 ball.ReverseY();
             }
+            
+            throw new NotImplementedException("Paddle collision");
         }
 
         /// <summary>
