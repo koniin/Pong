@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,11 +9,23 @@ namespace Pong
 {
     public class Paddle : IGameObject
     {
-        private Vector2 position;
         private Texture2D texture;
 
-        private Vector2 direction;
-        private Vector2 speed;
+        protected Vector2 position;
+        protected Vector2 direction;
+        protected Vector2 speed;
+
+        public int Height { get { return texture.Height; } }
+
+        public Vector2 Position
+        {
+            get { return position; }
+        }
+
+        public Rectangle BoundingBox
+        {
+            get { return new Rectangle((int)position.X, (int)position.Y, texture.Width, texture.Height); }
+        }
 
         public Paddle(Texture2D texture2D, Vector2 position) 
         {
@@ -19,7 +33,7 @@ namespace Pong
             this.position = position;
         }
 
-        public void Update(GameTime gameTime)
+        public virtual void Update(GameTime gameTime)
         {
             position += direction * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
         }
@@ -27,6 +41,11 @@ namespace Pong
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture, position, Color.White);
+        }
+
+        public void SetPosition(int y)
+        {
+            this.position.Y = y;
         }
     }
 }

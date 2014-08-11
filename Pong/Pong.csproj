@@ -37,7 +37,7 @@
   <ItemGroup>
     <Compile Include="Ball.cs" />
     <Compile Include="ComputerPaddle.cs" />
-    <Compile Include="Game1.cs" />
+    <Compile Include="PongGame.cs" />
     <Compile Include="IGameObject.cs" />
     <Compile Include="Paddle.cs" />
     <Compile Include="PlayerPaddle.cs" />

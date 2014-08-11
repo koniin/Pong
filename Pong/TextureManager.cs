@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +9,7 @@ namespace Pong
 {
     public static class TextureManager
     {
-        private static Texture2D CreateTexture(int width, int height)
+        public static Texture2D CreateTexture(GraphicsDevice graphicsDevice, int width, int height)
         {
             Color[] foregroundColors = new Color[width * height];
 
@@ -19,7 +21,7 @@ namespace Pong
                 }
             }
 
-            Texture2D texture = new Texture2D(GraphicsDevice, width, height, false, SurfaceFormat.Color);
+            Texture2D texture = new Texture2D(graphicsDevice, width, height, false, SurfaceFormat.Color);
             texture.SetData(foregroundColors);
             return texture;
         }

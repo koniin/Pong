@@ -22,6 +22,16 @@ namespace Pong
             get { return position; }
         }
 
+        public Vector2 Direction
+        {
+            get { return direction; }
+        }
+
+        public Rectangle BoundingBox
+        {
+            get { return new Rectangle((int)position.X, (int)position.Y, texture.Width, texture.Height); }
+        }
+
         public Ball(Texture2D texture2D, Vector2 position)
         {
             this.texture = texture2D;
@@ -29,7 +39,7 @@ namespace Pong
             this.originalPosition = position;
 
             SetRandomDirection();
-            speed = new Vector2(200, 200);
+            speed = new Vector2(300, 300);
         }
 
         public void Reset()
@@ -40,6 +50,12 @@ namespace Pong
 
         public void ReverseY()
         {
+            direction.Y = -direction.Y;
+        }
+
+        public void Bounce()
+        {
+            direction.X = -direction.X;
             direction.Y = -direction.Y;
         }
 

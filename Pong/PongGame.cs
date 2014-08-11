@@ -14,7 +14,7 @@ namespace Pong
     /// <summary>
     /// This is the main type for your game
     /// </summary>
-    public class Game1 : Game
+    public class PongGame : Game
     {
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
@@ -30,7 +30,7 @@ namespace Pong
         private const int gameWidth = 800;
         private const int gameHeight = 600;
 
-        public Game1()
+        public PongGame()
             : base()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -63,14 +63,14 @@ namespace Pong
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            ballTexture = TextureManager.CreateTexture(20, 20);
-            paddleTexture = TextureManager.CreateTexture(20, 100);
+            ballTexture = TextureManager.CreateTexture(GraphicsDevice, 20, 20);
+            paddleTexture = TextureManager.CreateTexture(GraphicsDevice, 20, 100);
             font = Content.Load<SpriteFont>("testfont");
 
             score = new ScoreScreen(font, new Vector2(gameWidth * 0.25F, gameHeight * 0.45F), new Vector2(gameWidth * 0.75F, gameHeight * 0.45F));
             ball = new Ball(ballTexture, new Vector2(390, 290));
-            player = new PlayerPaddle(paddleTexture, new Vector2(10, gameHeight / 2 - 50));
-            computer = new ComputerPaddle(paddleTexture, new Vector2(gameWidth - 30, gameHeight / 2 - 50));
+            player = new PlayerPaddle(paddleTexture, new Vector2(20, gameHeight / 2 - 50));
+            computer = new ComputerPaddle(paddleTexture, new Vector2(gameWidth - 40, gameHeight / 2 - 50));
         }
 
         /// <summary>
@@ -94,36 +94,53 @@ namespace Pong
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            /*
-            player.HandleInput();
-            computer.Move(ball direction?);
-             */
-            throw new NotImplementedException("input handling for player");
-            throw new NotImplementedException("keyboard first then mouse");
-
+            player.HandleInput(Keyboard.GetState());
+            
             ball.Update(gameTime);
             player.Update(gameTime);
             computer.Update(gameTime);
 
-            // Collision system / Collision manager, returns collision pairs?
+            computer.UpdateBallPosition(ball.Position, ball.Direction);
 
             // Sound for collision and for score
-
-            checkCollisions();
+            CheckCollisions();
 
             score.Update(computer.Score.ToString(), player.Score.ToString());
 
             base.Update(gameTime);
         }
 
-        private void checkCollisions()
+        private void CheckCollisions()
         {
-            if (ball.Position.X > gameWidth) 
+            CheckBallWorldCollisions();
+            CheckWorldCollision(player);
+            CheckWorldCollision(computer);
+            CheckBallCollision(player);
+            CheckBallCollision(computer);
+        }
+
+        private void CheckBallCollision(Paddle paddle)
+        {
+            if (ball.BoundingBox.Intersects(paddle.BoundingBox))
+                ball.Bounce();
+        }
+
+        private void CheckWorldCollision(Paddle paddle)
+        {
+            if (paddle.Position.Y + paddle.Height > gameHeight)
+                paddle.SetPosition(gameHeight - paddle.Height);
+            else if (paddle.Position.Y < 0)
+                paddle.SetPosition(0);
+        }
+
+        private void CheckBallWorldCollisions()
+        {
+            if (ball.Position.X > gameWidth)
             {
                 computer.Score++;
                 ball.Reset();
             }
-            else if (ball.Position.X < 0) 
+            else if (ball.Position.X < 0)
             {
                 player.Score++;
                 ball.Reset();
@@ -132,13 +149,6 @@ namespace Pong
             {
                 ball.ReverseY();
             }
-
-            // http://www.ponggame.org/
-
-            // different paddle collisions like where on paddle should give different movement of the ball (direction)
-
-            throw new NotImplementedException("Paddle collision with ball");
-
         }
 
         /// <summary>
