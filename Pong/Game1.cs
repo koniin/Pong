@@ -18,19 +18,17 @@ namespace Pong
     {
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
-        private Texture2D texture;
+        private Texture2D ballTexture;
+        private Texture2D paddleTexture;
         private Ball ball;
         private ScoreScreen score;
         private PlayerPaddle player;
         private ComputerPaddle computer;
 
         private SpriteFont font;
-        
-        private int gameWidth = 800;
-        private int gameHeight = 600;
 
-        private int playerLeftScore = 0;
-        private int playerRightScore = 0;
+        private const int gameWidth = 800;
+        private const int gameHeight = 600;
 
         public Game1()
             : base()
@@ -65,38 +63,14 @@ namespace Pong
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            texture = CreateTexture();
+            ballTexture = TextureManager.CreateTexture(20, 20);
+            paddleTexture = TextureManager.CreateTexture(20, 100);
             font = Content.Load<SpriteFont>("testfont");
 
-            ball = new Ball(texture, new Vector2(390, 290));
             score = new ScoreScreen(font, new Vector2(gameWidth * 0.25F, gameHeight * 0.45F), new Vector2(gameWidth * 0.75F, gameHeight * 0.45F));
-
-            throw new NotImplementedException("paddle texture");
-            throw new NotImplementedException("player and computer paddle");
-        }
-        /*
-        protected Texture2D CreateTexture()
-        {
-            Texture2D texture = new Texture2D(GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
-            texture.SetData<Color>(new Color[] { Color.White });
-            return texture;
-        }*/
-
-        private Texture2D CreateTexture()
-        {
-            Color[] foregroundColors = new Color[20 * 20];
-
-            for (int x = 0; x < 20; x++)
-            {
-                for (int y = 0; y < 20; y++)
-                {
-                    foregroundColors[x + y * 20] = Color.White;
-                }
-            }
-
-            Texture2D texture = new Texture2D(GraphicsDevice, 20, 20, false, SurfaceFormat.Color);
-            texture.SetData(foregroundColors);
-            return texture;
+            ball = new Ball(ballTexture, new Vector2(390, 290));
+            player = new PlayerPaddle(paddleTexture, new Vector2(10, gameHeight / 2 - 50));
+            computer = new ComputerPaddle(paddleTexture, new Vector2(gameWidth - 30, gameHeight / 2 - 50));
         }
 
         /// <summary>
@@ -106,7 +80,7 @@ namespace Pong
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
-            texture.Dispose();
+            ballTexture.Dispose();
             font = null;
         }
 
@@ -120,9 +94,15 @@ namespace Pong
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            /*
+            player.HandleInput();
+            computer.Move();
+             */
             throw new NotImplementedException("input handling for player");
 
             ball.Update(gameTime);
+            player.Update(gameTime);
+            computer.Update(gameTime);
 
             checkCollisions();
 
@@ -148,7 +128,7 @@ namespace Pong
                 ball.ReverseY();
             }
             
-            throw new NotImplementedException("Paddle collision");
+            throw new NotImplementedException("Paddle collision with ball");
         }
 
         /// <summary>
@@ -160,11 +140,10 @@ namespace Pong
             GraphicsDevice.Clear(Color.Black);
 
             spriteBatch.Begin();
-
             score.Draw(spriteBatch);
-
+            player.Draw(spriteBatch);
+            computer.Draw(spriteBatch);
             ball.Draw(spriteBatch);
-
             spriteBatch.End();
 
             base.Draw(gameTime);
