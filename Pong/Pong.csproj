@@ -36,11 +36,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Ball.cs" />
+    <Compile Include="ComputerPaddle.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="IGameObject.cs" />
+    <Compile Include="Paddle.cs" />
+    <Compile Include="PlayerPaddle.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScoreScreen.cs" />
+    <Compile Include="TextureManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
