@@ -9,6 +9,8 @@ namespace Pong
     {
         public int Score { get; set; }
 
-        public ComputerPaddle(Texture2D texture2D, Vector2 position) : base(texture2D, position) { }
+        public ComputerPaddle(Texture2D texture2D, Vector2 position) : base(texture2D, position) {
+            throw new NotImplementedException("Computer paddle should move towards the balls direction");
+        }
     }
 }

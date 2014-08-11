@@ -96,13 +96,16 @@ namespace Pong
 
             /*
             player.HandleInput();
-            computer.Move();
+            computer.Move(ball direction?);
              */
             throw new NotImplementedException("input handling for player");
+            throw new NotImplementedException("keyboard first then mouse");
 
             ball.Update(gameTime);
             player.Update(gameTime);
             computer.Update(gameTime);
+
+            // Collision system / Collision manager, returns collision pairs?
 
             checkCollisions();
 
@@ -127,8 +130,13 @@ namespace Pong
             {
                 ball.ReverseY();
             }
-            
+
+            // http://www.ponggame.org/
+
+            // different paddle collisions like where on paddle should give different movement of the ball (direction)
+
             throw new NotImplementedException("Paddle collision with ball");
+
         }
 
         /// <summary>
