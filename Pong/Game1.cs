@@ -109,7 +109,7 @@ namespace Pong
 
             checkCollisions();
 
-            score.Update(playerLeftScore.ToString(), playerRightScore.ToString());
+            score.Update(computer.Score.ToString(), player.Score.ToString());
 
             base.Update(gameTime);
         }
