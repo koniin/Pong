@@ -122,7 +122,7 @@ namespace Pong
         private void CheckBallCollision(Paddle paddle)
         {
             if (ball.BoundingBox.Intersects(paddle.BoundingBox))
-                ball.Bounce();
+                ball.Bounce(paddle.BoundingBox);
         }
 
         private void CheckWorldCollision(Paddle paddle)

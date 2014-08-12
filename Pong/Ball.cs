@@ -53,10 +53,45 @@ namespace Pong
             direction.Y = -direction.Y;
         }
 
-        public void Bounce()
+        public void Bounce(Rectangle collisionTarget)
         {
             direction.X = -direction.X;
-            direction.Y = -direction.Y;
+
+            int differenceToTargetCenter = collisionTarget.Center.Y - BoundingBox.Center.Y;
+
+            throw new NotImplementedException("Get a real direction calcualation....");
+
+            if (differenceToTargetCenter > 20)
+            {
+                direction.Y = -direction.Y * 1.9f;
+            }
+            else if (differenceToTargetCenter <= 20 && differenceToTargetCenter >= -20)
+            {
+                direction.Y = 0.5f;
+            }
+            else if (differenceToTargetCenter < -20)
+            {
+                direction.Y = -direction.Y * 1.9f;
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
+
+            /*
+                collisionTarget.Center.Y - BoundingBox.Center.Y
+             
+                50 - 20 = 30 (högt upp)
+
+                185 - 188 = -3 (nära mitten)
+
+                494 - 551 = -57 (långt ner)
+             * */
+            /*
+            if(position.Y < collisionTarget.Y + 33)
+            if(position.Y < collisionTarget.Y + 66)
+            if(position.Y < collisionTarget.Y + 100)
+            */
         }
 
         public void Update(GameTime gameTime)
