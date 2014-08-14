@@ -27,12 +27,12 @@ namespace Pong
         {
             if (KeyState.IsKeyDown(Keys.W))
             {
-                this.speed = new Vector2(0, 0.3);
+                this.speed = new Vector2(0, 0.3f);
                 this.direction = new Vector2(0, -1);
             }
             else if (KeyState.IsKeyDown(Keys.S))
             {
-                this.speed = new Vector2(0, 0.3);
+                this.speed = new Vector2(0, 0.3f);
                 this.direction = new Vector2(0, 1);
             }
             else
