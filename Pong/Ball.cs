@@ -39,7 +39,7 @@ namespace Pong
             this.originalPosition = position;
 
             SetRandomDirection();
-            speed = new Vector2(300, 300);
+            speed = new Vector2(0.3f, 0.3f);
         }
 
         public void Reset()
@@ -96,7 +96,7 @@ namespace Pong
 
         public void Update(GameTime gameTime)
         {
-            position += direction * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            position += direction * speed * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
         }
 
         public void Draw(SpriteBatch spriteBatch)
