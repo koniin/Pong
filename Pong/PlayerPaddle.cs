@@ -20,19 +20,19 @@ namespace Pong
 
         public override void Update(GameTime gameTime)
         {
-            position += direction * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            position += direction * speed * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
         }
 
         public void HandleInput(KeyboardState KeyState)
         {
             if (KeyState.IsKeyDown(Keys.W))
             {
-                this.speed = new Vector2(0, 300);
+                this.speed = new Vector2(0, 0.3);
                 this.direction = new Vector2(0, -1);
             }
             else if (KeyState.IsKeyDown(Keys.S))
             {
-                this.speed = new Vector2(0, 300);
+                this.speed = new Vector2(0, 0.3);
                 this.direction = new Vector2(0, 1);
             }
             else
