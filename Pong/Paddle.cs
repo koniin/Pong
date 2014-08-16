@@ -5,46 +5,47 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Pong
-{
-    public class Paddle : IGameObject
-    {
-        private Texture2D texture;
+namespace Pong {
+    public enum PaddleType {
+        Player,
+        Computer
+    }
 
+    public class Paddle : IGameObject {
+        private Texture2D texture;
         protected Vector2 position;
         protected Vector2 direction;
-        protected Vector2 speed;
+        protected float speed;
+        protected PaddleType type;
 
         public int Height { get { return texture.Height; } }
 
-        public Vector2 Position
-        {
+        public Vector2 Position {
             get { return position; }
         }
 
-        public Rectangle BoundingBox
-        {
+        public PaddleType Type {
+            get { return type; }
+        }
+
+        public Rectangle BoundingBox {
             get { return new Rectangle((int)position.X, (int)position.Y, texture.Width, texture.Height); }
         }
 
-        public Paddle(Texture2D texture2D, Vector2 position) 
-        {
+        public Paddle(Texture2D texture2D, Vector2 position) {
             this.texture = texture2D;
             this.position = position;
         }
 
-        public virtual void Update(GameTime gameTime)
-        {
+        public virtual void Update(GameTime gameTime) {
             position += direction * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
         }
 
-        public void Draw(SpriteBatch spriteBatch)
-        {
+        public void Draw(SpriteBatch spriteBatch) {
             spriteBatch.Draw(texture, position, Color.White);
         }
 
-        public void SetPosition(int y)
-        {
+        public void SetPosition(int y) {
             this.position.Y = y;
         }
     }

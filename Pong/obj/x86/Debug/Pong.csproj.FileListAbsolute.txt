@@ -24,3 +24,8 @@ C:\Code\Pong\Pong\obj\x86\Debug\Pong.csprojResolveAssemblyReference.cache
 C:\Code\Pong\Pong\obj\x86\Debug\Pong.exe
 C:\Code\Pong\Pong\obj\x86\Debug\Pong.pdb
 C:\Code\Pong\Pong\bin\Windows\Debug\Content\testfont.xnb
+C:\Code\Pong\Pong\bin\Windows\Debug\Content\Consolas78.xnb
+C:\Code\Pong\Pong\bin\Windows\Debug\Content\bell.xnb
+C:\Code\Pong\Pong\bin\Windows\Debug\Content\drums.xnb
+C:\Code\Pong\Pong\bin\Windows\Debug\Content\ping.xnb
+C:\Code\Pong\Pong\bin\Windows\Debug\Content\drums.wma
