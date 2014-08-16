@@ -85,7 +85,6 @@ namespace Pong {
         /// all content.
         /// </summary>
         protected override void UnloadContent() {
-            // TODO: Unload any non ContentManager content here
             MediaPlayer.Stop();
             
             ballTexture.Dispose();
@@ -129,20 +128,6 @@ namespace Pong {
             CheckBallCollision(computer);
         }
 
-        private void CheckBallCollision(Paddle paddle) {
-            if (ball.BoundingBox.Intersects(paddle.BoundingBox)) {
-                ping.Play();
-                ball.Bounce(paddle);
-            }
-        }
-
-        private void CheckWorldCollision(Paddle paddle) {
-            if (paddle.Position.Y + paddle.Height > gameHeight)
-                paddle.SetPosition(gameHeight - paddle.Height);
-            else if (paddle.Position.Y < 0)
-                paddle.SetPosition(0);
-        }
-
         private void CheckBallWorldCollisions() {
             if (ball.Position.X > gameWidth) {
                 bell.Play();
@@ -157,6 +142,20 @@ namespace Pong {
             else if (ball.Position.Y > gameHeight - 20 || ball.Position.Y < 0) {
                 ping.Play();
                 ball.ReverseY();
+            }
+        }
+
+        private void CheckWorldCollision(Paddle paddle) {
+            if (paddle.Position.Y + paddle.Height > gameHeight)
+                paddle.SetPosition(gameHeight - paddle.Height);
+            else if (paddle.Position.Y < 0)
+                paddle.SetPosition(0);
+        }
+
+        private void CheckBallCollision(Paddle paddle) {
+            if (ball.BoundingBox.Intersects(paddle.BoundingBox)) {
+                ping.Play();
+                ball.Bounce(paddle);
             }
         }
 

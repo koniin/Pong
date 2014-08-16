@@ -37,7 +37,6 @@
   <ItemGroup>
     <Compile Include="Calc2D.cs" />
     <Compile Include="Ball.cs" />
-    <Compile Include="CollisionManager.cs" />
     <Compile Include="ComputerPaddle.cs" />
     <Compile Include="PongGame.cs" />
     <Compile Include="IGameObject.cs" />
@@ -66,11 +65,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\drums.xnb">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Content\testfont.xnb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

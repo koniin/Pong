@@ -19,6 +19,20 @@ namespace Pong {
         }
 
         public override void Update(GameTime gameTime) {
+            if (this.ballDirection.X < 0)
+                return;
+            /*
+            if (this.BoundingBox.Center.Y > this.ballPosition.Y)
+                this.direction = new Vector2(0, -1);
+            else if (this.BoundingBox.Center.Y < this.ballPosition.Y)
+                this.direction = new Vector2(0, 1);
+            else
+                this.direction = new Vector2(0, 0);
+            */
+
+            /*
+             *  Works better but ugly
+             */ 
             float ballY = 0;
             if (this.ballDirection.Y >= 0)
                 ballY = this.ballPosition.Y + 50;
@@ -33,7 +47,7 @@ namespace Pong {
                 this.direction = new Vector2(0, 1);
             else if (ballY < this.Position.Y + 90)
                 this.direction = new Vector2(0, -1);
-
+            
             position += direction * speed * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
         }
 

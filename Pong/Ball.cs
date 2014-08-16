@@ -42,10 +42,6 @@ namespace Pong {
             SetRandomDirection();
         }
 
-        private void SetDefaultSpeed() {
-            speed = new Vector2(0.4f, 0.4f);
-        }
-
         public void ReverseY() {
             direction.Y = -direction.Y;
         }
@@ -67,6 +63,10 @@ namespace Pong {
 
         public void Draw(SpriteBatch spriteBatch) {
             spriteBatch.Draw(texture, position, Color.White);
+        }
+
+        private void SetDefaultSpeed() {
+            speed = new Vector2(0.4f, 0.4f);
         }
 
         private void SetRandomDirection() {
