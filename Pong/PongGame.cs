@@ -73,7 +73,11 @@ namespace Pong {
 
             MediaPlayer.IsRepeating = true;
             MediaPlayer.Volume = 0.5f;
-            MediaPlayer.Play(music);
+            try {
+                MediaPlayer.Play(music);
+            } catch (Exception e) {
+                MediaPlayer.Play(music);
+            }
         }
 
         /// <summary>
