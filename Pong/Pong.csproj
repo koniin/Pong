@@ -57,7 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\drums.wma">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Icon.ico" />
   </ItemGroup>

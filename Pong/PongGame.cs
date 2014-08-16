@@ -71,8 +71,8 @@ namespace Pong {
             player = new PlayerPaddle(paddleTexture, new Vector2(20, gameHeight / 2 - 50));
             computer = new ComputerPaddle(paddleTexture, new Vector2(gameWidth - 40, gameHeight / 2 - 50));
 
-
             MediaPlayer.IsRepeating = true;
+            MediaPlayer.Volume = 0.5f;
             MediaPlayer.Play(music);
         }
 
@@ -82,11 +82,13 @@ namespace Pong {
         /// </summary>
         protected override void UnloadContent() {
             // TODO: Unload any non ContentManager content here
+            MediaPlayer.Stop();
+            
             ballTexture.Dispose();
             paddleTexture.Dispose();
             ping.Dispose();
             bell.Dispose();
-            //music.Dispose();
+            music.Dispose();
             font = null;
         }
 
