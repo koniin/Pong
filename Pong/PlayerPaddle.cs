@@ -9,7 +9,7 @@ using System.Text;
 
 namespace Pong {
     public class PlayerPaddle : Paddle {
-        private float maxSpeed = 0.5f;
+        private float maxSpeed = 0.3f;
 
         public int Score { get; set; }
 

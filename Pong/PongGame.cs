@@ -61,7 +61,7 @@ namespace Pong {
             paddleTexture = TextureManager.CreateTexture(GraphicsDevice, 20, 100);
             font = Content.Load<SpriteFont>("Consolas78");
             
-            soundManager = new SoundManager();
+            soundManager = new SoundManager(Content);
             soundManager.EnableSound(true);
             soundManager.AddSound("ping");
             soundManager.AddSound("bell");
@@ -82,12 +82,13 @@ namespace Pong {
         /// </summary>
         protected override void UnloadContent() {
             soundManager.StopMusic();
-            soundManager.UnloadAll();
             soundManager = null;
 
             ballTexture.Dispose();
             paddleTexture.Dispose();
             font = null;
+
+            Content.Unload();
         }
 
         /// <summary>

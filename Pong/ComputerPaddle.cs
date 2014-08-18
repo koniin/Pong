@@ -10,23 +10,33 @@ namespace Pong {
     public class ComputerPaddle : Paddle {
         private Vector2 ballPosition;
         private Vector2 ballDirection;
+        private float maxSpeed = 0.25f;
 
         public int Score { get; set; }
 
         public ComputerPaddle(Texture2D texture2D, Vector2 position)
             : base(texture2D, position) {
-            this.speed = 0.28f;
+            this.speed = 0;
         }
 
         public override void Update(GameTime gameTime) {
             if (this.ballDirection.X < 0) {
                 this.direction = new Vector2(0, 0);
                 return;
-            } else if (this.ballPosition.Y + 10 < this.BoundingBox.Center.Y) // ball center is above
+            }
+            else if (this.ballPosition.Y + 10 < position.Y + 50) { // ball center is above = move up
+                this.speed += 0.05f;
+                if (speed > maxSpeed)
+                    speed = maxSpeed;
                 this.direction = new Vector2(0, -1);
-            else if (this.ballPosition.Y + 10 > this.BoundingBox.Center.Y) // ball center is below
+            }
+            else if (this.ballPosition.Y + 10 > position.Y + 50) { // ball center is below
+                this.speed += 0.05f;
+                if (speed > maxSpeed)
+                    speed = maxSpeed;
                 this.direction = new Vector2(0, 1);
-
+            }
+            
             position += direction * speed * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
         }
 
@@ -34,5 +44,24 @@ namespace Pong {
             this.ballPosition = ballPosition;
             this.ballDirection = ballDirection;
         }
+
+        /*
+         * if (KeyState.IsKeyDown(Keys.W)) {
+                this.speed += 0.05f;
+                if(speed > maxSpeed)
+                    speed = maxSpeed;
+                this.direction = new Vector2(0, -1);
+            }
+            else if (KeyState.IsKeyDown(Keys.S)) {
+                this.speed += 0.05f;
+                if(speed > maxSpeed)
+                    speed = maxSpeed;
+                this.direction = new Vector2(0, 1);
+            } else if(speed > 0) {
+                speed -= 0.05f;
+                if (speed < 0.1f)
+                    speed = 0;
+            }
+         * */
     }
 }

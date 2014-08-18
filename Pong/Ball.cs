@@ -48,7 +48,7 @@ namespace Pong {
             direction.Y = -direction.Y;
         }
         
-        public void SetPosition(int x, int y) {
+        public void SetPosition(float x, float y) {
             this.position.X = x;
             this.position.Y = y;
         }
@@ -78,7 +78,7 @@ namespace Pong {
         }
 
         private void SetDefaultSpeed() {
-            speed = new Vector2(0.4f, 0.4f);
+            speed = new Vector2(0.35f, 0.35f);
         }
 
         private void SetRandomDirection() {
