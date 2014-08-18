@@ -46,8 +46,9 @@ namespace Pong {
             direction.Y = -direction.Y;
         }
         
-        public void SetPosition(int y) {
+        public void SetPosition(int y, int x) {
             this.position.Y = y;
+            this.position.X = x;
         }
 
         public void Bounce(Paddle paddle) {
