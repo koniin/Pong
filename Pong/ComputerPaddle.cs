@@ -30,14 +30,12 @@ namespace Pong {
                 if (speed > maxSpeed)
                     speed = maxSpeed;
                 this.direction = new Vector2(0, -1);
-                System.Diagnostics.Debug.WriteLine("up - " + (this.ballPosition.Y + 10) + ", this Y - " + BoundingBox.Center.Y);
             }
             else if (this.ballPosition.Y + 10 > BoundingBox.Center.Y + 10) { // ball center is below
                 this.speed += 0.05f;
                 if (speed > maxSpeed)
                     speed = maxSpeed;
                 this.direction = new Vector2(0, 1);
-                System.Diagnostics.Debug.WriteLine("down - " + (this.ballPosition.Y + 10) + ", this Y - " + BoundingBox.Center.Y);
             }
             else if (speed > 0) {
                 speed -= 0.05f;
