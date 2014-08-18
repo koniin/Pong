@@ -54,14 +54,19 @@ namespace Pong {
         }
 
         public void Bounce(Paddle paddle) {
+            speed *= 1.04f;
+            
+            // Calculate a new direction depending on where on the paddle the ball bounces
             float differenceToTargetCenter = paddle.BoundingBox.Center.Y - BoundingBox.Center.Y;
-
             direction = Calc2D.GetRightPointingAngledPoint((int)(90 + (differenceToTargetCenter * 1.3f)));
             
-            if (paddle.BoundingBox.Center.X > BoundingBox.Center.X)
+            // Set a new position to make sure we're outside the paddle
+            if (paddle.BoundingBox.Center.X > BoundingBox.Center.X) {
                 direction.X = -direction.X;
-
-            speed *= 1.04f;
+                position.X = paddle.BoundingBox.Left - texture.Width;
+            } else {
+                position.X = paddle.BoundingBox.Right;
+            }
         }
 
         public void Update(GameTime gameTime) {
