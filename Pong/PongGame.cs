@@ -139,9 +139,15 @@ namespace Pong {
                 player.Score++;
                 ball.Reset();
             }
-            else if (ball.Position.Y > gameHeight - 20 || ball.Position.Y < 0) {
+            else if (ball.Position.Y > gameHeight - ball.Height) {
                 ping.Play();
-                ball.ReverseY();
+                ball.SetPosition(gameHeight - ball.Height);
+                ball.ReverseYDirection();
+            }
+            else if(ball.Position.Y < 0) {
+                ping.Play();
+                ball.SetPosition(0);
+                ball.ReverseYDirection();
             }
         }
 
