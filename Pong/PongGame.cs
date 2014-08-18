@@ -141,12 +141,12 @@ namespace Pong {
             }
             else if (ball.Position.Y > gameHeight - ball.Height) {
                 ping.Play();
-                ball.SetPosition(gameHeight - ball.Height);
+                ball.SetPosition(ball.Position.X, gameHeight - ball.Height);
                 ball.ReverseYDirection();
             }
             else if(ball.Position.Y < 0) {
                 ping.Play();
-                ball.SetPosition(0);
+                ball.SetPosition(ball.Position.X, 0);
                 ball.ReverseYDirection();
             }
         }
