@@ -20,14 +20,13 @@ namespace Pong {
         }
 
         public override void Update(GameTime gameTime) {
-            if (this.ballDirection.X < 0)
+            if (this.ballDirection.X < 0) {
+                this.direction = new Vector2(0, 0);
                 return;
-            else if (this.ballPosition.Y + 10 < this.BoundingBox.Center.Y) // ball center is above
+            } else if (this.ballPosition.Y + 10 < this.BoundingBox.Center.Y) // ball center is above
                 this.direction = new Vector2(0, -1);
             else if (this.ballPosition.Y + 10 > this.BoundingBox.Center.Y) // ball center is below
                 this.direction = new Vector2(0, 1);
-            else
-                this.direction = new Vector2(0, 0);
 
             position += direction * speed * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
         }
