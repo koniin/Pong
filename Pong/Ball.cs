@@ -42,7 +42,7 @@ namespace Pong {
             SetRandomDirection();
         }
 
-        public void ReverseY() {
+        public void ReverseYDirection() {
             direction.Y = -direction.Y;
         }
         
