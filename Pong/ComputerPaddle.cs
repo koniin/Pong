@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Security.Cryptography.X509Certificates;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -21,33 +22,13 @@ namespace Pong {
         public override void Update(GameTime gameTime) {
             if (this.ballDirection.X < 0)
                 return;
-            /*
-            if (this.BoundingBox.Center.Y > this.ballPosition.Y)
+            else if (this.ballPosition.Y + 10 < this.BoundingBox.Center.Y) // ball center is above
                 this.direction = new Vector2(0, -1);
-            else if (this.BoundingBox.Center.Y < this.ballPosition.Y)
+            else if (this.ballPosition.Y + 10 > this.BoundingBox.Center.Y) // ball center is below
                 this.direction = new Vector2(0, 1);
             else
                 this.direction = new Vector2(0, 0);
-            */
 
-            /*
-             *  Works better but ugly
-             */ 
-            float ballY = 0;
-            if (this.ballDirection.Y >= 0)
-                ballY = this.ballPosition.Y + 50;
-            else
-                ballY = this.ballPosition.Y - 50;
-
-            if (this.ballDirection.X < 0)
-                return;
-            else if (ballY > this.Position.Y - 10 && ballY < this.Position.Y + 90)
-                return;
-            else if (ballY > this.Position.Y)
-                this.direction = new Vector2(0, 1);
-            else if (ballY < this.Position.Y + 90)
-                this.direction = new Vector2(0, -1);
-            
             position += direction * speed * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
         }
 
