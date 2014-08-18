@@ -6,26 +6,16 @@ using System.Linq;
 using System.Text;
 
 namespace Pong {
-    public enum PaddleType {
-        Player,
-        Computer
-    }
-
     public class Paddle : IGameObject {
         private Texture2D texture;
         protected Vector2 position;
         protected Vector2 direction;
         protected float speed;
-        protected PaddleType type;
 
         public int Height { get { return texture.Height; } }
 
         public Vector2 Position {
             get { return position; }
-        }
-
-        public PaddleType Type {
-            get { return type; }
         }
 
         public Rectangle BoundingBox {

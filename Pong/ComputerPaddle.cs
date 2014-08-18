@@ -16,7 +16,6 @@ namespace Pong {
         public ComputerPaddle(Texture2D texture2D, Vector2 position)
             : base(texture2D, position) {
             this.speed = 0.28f;
-            type = PaddleType.Computer;
         }
 
         public override void Update(GameTime gameTime) {

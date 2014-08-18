@@ -15,7 +15,6 @@ namespace Pong {
 
         public PlayerPaddle(Texture2D texture2D, Vector2 position)
             : base(texture2D, position) {
-            type = PaddleType.Player;
         }
 
         public override void Update(GameTime gameTime) {
