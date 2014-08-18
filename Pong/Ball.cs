@@ -45,6 +45,10 @@ namespace Pong {
         public void ReverseY() {
             direction.Y = -direction.Y;
         }
+        
+        public void SetPosition(int y) {
+            this.position.Y = y;
+        }
 
         public void Bounce(Paddle paddle) {
             float differenceToTargetCenter = paddle.BoundingBox.Center.Y - BoundingBox.Center.Y;
