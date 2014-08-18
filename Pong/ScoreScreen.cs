@@ -25,8 +25,8 @@ namespace Pong {
         }
 
         public void Draw(SpriteBatch spriteBatch) {
-            spriteBatch.DrawString(font, p1Score, positionP1, Color.DarkGray);
-            spriteBatch.DrawString(font, p2Score, positionP2, Color.DarkGray);
+            spriteBatch.DrawString(font, p1Score, positionP1, Color.LightGray);
+            spriteBatch.DrawString(font, p2Score, positionP2, Color.LightGray);
         }
     }
 }

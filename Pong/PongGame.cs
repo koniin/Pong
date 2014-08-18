@@ -65,11 +65,10 @@ namespace Pong {
             soundManager.EnableSound(true);
             soundManager.AddSound("ping");
             soundManager.AddSound("bell");
-
             soundManager.AddMusic("drums", true, 0.5f);
             soundManager.PlayMusic();
 
-            score = new ScoreScreen(font, new Vector2(gameWidth * 0.25F, gameHeight * 0.40F), new Vector2(gameWidth * 0.70F, gameHeight * 0.40F));
+            score = new ScoreScreen(font, new Vector2(gameWidth * 0.40F, 20), new Vector2(gameWidth * 0.55F, 20));
             ball = new Ball(ballTexture, new Vector2(390, 290));
             player = new PlayerPaddle(paddleTexture, new Vector2(20, gameHeight / 2 - 50));
             computer = new ComputerPaddle(paddleTexture, new Vector2(gameWidth - 40, gameHeight / 2 - 50));
@@ -168,6 +167,9 @@ namespace Pong {
             GraphicsDevice.Clear(Color.Black);
 
             spriteBatch.Begin();
+
+            DrawDivider(spriteBatch);
+
             score.Draw(spriteBatch);
             player.Draw(spriteBatch);
             computer.Draw(spriteBatch);
@@ -175,6 +177,13 @@ namespace Pong {
             spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        private void DrawDivider(SpriteBatch spriteBatch) {
+            // To optimize: pre-calculate positions or make one big sprite
+            for (int i = 0; i < gameHeight / 30; i++) {
+                spriteBatch.Draw(ballTexture, new Vector2(gameWidth / 2 - 10, (i * 30) + 10), Color.White);
+            }
         }
     }
 }
