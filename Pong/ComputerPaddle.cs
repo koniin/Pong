@@ -22,21 +22,29 @@ namespace Pong {
         public override void Update(GameTime gameTime) {
             if (this.ballDirection.X < 0) {
                 this.direction = new Vector2(0, 0);
+                this.speed = 0;
                 return;
             }
-            else if (this.ballPosition.Y + 10 < position.Y + 50) { // ball center is above = move up
+            else if (this.ballPosition.Y + 10 < BoundingBox.Center.Y - 10) { // ball center is above = move up
                 this.speed += 0.05f;
                 if (speed > maxSpeed)
                     speed = maxSpeed;
                 this.direction = new Vector2(0, -1);
+                System.Diagnostics.Debug.WriteLine("up - " + (this.ballPosition.Y + 10) + ", this Y - " + BoundingBox.Center.Y);
             }
-            else if (this.ballPosition.Y + 10 > position.Y + 50) { // ball center is below
+            else if (this.ballPosition.Y + 10 > BoundingBox.Center.Y + 10) { // ball center is below
                 this.speed += 0.05f;
                 if (speed > maxSpeed)
                     speed = maxSpeed;
                 this.direction = new Vector2(0, 1);
+                System.Diagnostics.Debug.WriteLine("down - " + (this.ballPosition.Y + 10) + ", this Y - " + BoundingBox.Center.Y);
             }
-            
+            else if (speed > 0) {
+                speed -= 0.05f;
+                if (speed < 0.1f)
+                    speed = 0;
+            }
+
             position += direction * speed * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
         }
 
