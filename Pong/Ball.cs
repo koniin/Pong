@@ -22,6 +22,8 @@ namespace Pong {
         public Vector2 Direction {
             get { return direction; }
         }
+        
+        public int Height { get { return texture.Height; } }
 
         public Rectangle BoundingBox {
             get { return new Rectangle((int)position.X, (int)position.Y, texture.Width, texture.Height); }
