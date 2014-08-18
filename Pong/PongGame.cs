@@ -24,10 +24,8 @@ namespace Pong {
         private ScoreScreen score;
         private PlayerPaddle player;
         private ComputerPaddle computer;
-        private SoundEffect ping;
-        private SoundEffect bell;
-        private Song music; 
         private SpriteFont font;
+        private SoundManager soundManager;
 
         private const int gameWidth = 800;
         private const int gameHeight = 600;
@@ -62,22 +60,20 @@ namespace Pong {
             ballTexture = TextureManager.CreateTexture(GraphicsDevice, 20, 20);
             paddleTexture = TextureManager.CreateTexture(GraphicsDevice, 20, 100);
             font = Content.Load<SpriteFont>("Consolas78");
-            ping = Content.Load<SoundEffect>("ping");
-            bell = Content.Load<SoundEffect>("bell");
-            music = Content.Load<Song>("drums");
+            
+            soundManager = new SoundManager();
+            soundManager.EnableSound(true);
+            soundManager.AddSound("ping");
+            soundManager.AddSound("bell");
+
+            soundManager.AddMusic("drums", true, 0.5f);
+            soundManager.PlayMusic();
 
             score = new ScoreScreen(font, new Vector2(gameWidth * 0.25F, gameHeight * 0.40F), new Vector2(gameWidth * 0.70F, gameHeight * 0.40F));
             ball = new Ball(ballTexture, new Vector2(390, 290));
             player = new PlayerPaddle(paddleTexture, new Vector2(20, gameHeight / 2 - 50));
             computer = new ComputerPaddle(paddleTexture, new Vector2(gameWidth - 40, gameHeight / 2 - 50));
 
-            MediaPlayer.IsRepeating = true;
-            MediaPlayer.Volume = 0.5f;
-            try {
-                MediaPlayer.Play(music);
-            } catch (Exception e) {
-                MediaPlayer.Play(music);
-            }
         }
 
         /// <summary>
@@ -85,13 +81,12 @@ namespace Pong {
         /// all content.
         /// </summary>
         protected override void UnloadContent() {
-            MediaPlayer.Stop();
-            
+            soundManager.StopMusic();
+            soundManager.UnloadAll();
+            soundManager = null;
+
             ballTexture.Dispose();
             paddleTexture.Dispose();
-            ping.Dispose();
-            bell.Dispose();
-            music.Dispose();
             font = null;
         }
 
@@ -112,7 +107,6 @@ namespace Pong {
 
             computer.UpdateBallPosition(ball.Position, ball.Direction);
 
-            // Sound for collision and for score
             CheckCollisions();
 
             score.Update(computer.Score.ToString(), player.Score.ToString());
@@ -130,22 +124,22 @@ namespace Pong {
 
         private void CheckBallWorldCollisions() {
             if (ball.Position.X > gameWidth) {
-                bell.Play();
+                soundManager.Play("bell");
                 computer.Score++;
                 ball.Reset();
             }
             else if (ball.Position.X < 0) {
-                bell.Play();
+                soundManager.Play("bell");
                 player.Score++;
                 ball.Reset();
             }
             else if (ball.Position.Y > gameHeight - ball.Height) {
-                ping.Play();
+                soundManager.Play("ping");
                 ball.SetPosition(ball.Position.X, gameHeight - ball.Height);
                 ball.ReverseYDirection();
             }
             else if(ball.Position.Y < 0) {
-                ping.Play();
+                soundManager.Play("ping");
                 ball.SetPosition(ball.Position.X, 0);
                 ball.ReverseYDirection();
             }
@@ -160,7 +154,7 @@ namespace Pong {
 
         private void CheckBallCollision(Paddle paddle) {
             if (ball.BoundingBox.Intersects(paddle.BoundingBox)) {
-                ping.Play();
+                soundManager.Play("ping");
                 ball.Bounce(paddle);
             }
         }
