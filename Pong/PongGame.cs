@@ -18,8 +18,11 @@ namespace Pong {
     public class PongGame : Game {
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
+
+        private GameObjects gameObjects;
         private Texture2D ballTexture;
         private Texture2D paddleTexture;
+
         private Ball ball;
         private ScoreScreen score;
         private PlayerPaddle player;
@@ -39,21 +42,9 @@ namespace Pong {
             graphics.PreferredBackBufferHeight = gameHeight;   // set this value to the desired height of your window
             graphics.ApplyChanges();
         }
-
-        /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
-        /// </summary>
         protected override void Initialize() {
             base.Initialize();
         }
-
-        /// <summary>
-        /// LoadContent will be called once per game and is the place to load
-        /// all of your content.
-        /// </summary>
         protected override void LoadContent() {
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
@@ -68,20 +59,29 @@ namespace Pong {
             soundManager.AddMusic("drums", true, 0.5f);
             soundManager.PlayMusic();
 
+            var bounds = new Rectangle(0, 0, Window.ClientBounds.Width,
+                    Window.ClientBounds.Height);
+
             score = new ScoreScreen(font, new Vector2(gameWidth * 0.40F, 20), new Vector2(gameWidth * 0.55F, 20));
-            ball = new Ball(ballTexture, new Vector2(390, 290));
-            player = new PlayerPaddle(paddleTexture, new Vector2(20, gameHeight / 2 - 50));
-            computer = new ComputerPaddle(paddleTexture, new Vector2(gameWidth - 40, gameHeight / 2 - 50));
+            ball = new Ball(ballTexture, new Vector2(390, 290),
+                bounds);
+            player = new PlayerPaddle(paddleTexture, new Vector2(20, gameHeight / 2 - 50), 
+                bounds);
+            computer = new ComputerPaddle(paddleTexture, new Vector2(gameWidth - 40, gameHeight / 2 - 50),
+                bounds);
 
+            gameObjects = new GameObjects
+            {
+                PlayerPaddle = player,
+                ComputerPaddle = computer,
+                Ball = ball,
+                SoundManager = soundManager
+            };
         }
-
-        /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// all content.
-        /// </summary>
         protected override void UnloadContent() {
             soundManager.StopMusic();
             soundManager = null;
+
 
             ballTexture.Dispose();
             paddleTexture.Dispose();
@@ -89,87 +89,23 @@ namespace Pong {
 
             Content.Unload();
         }
-
-        /// <summary>
-        /// Allows the game to run logic such as updating the world,
-        /// checking for collisions, gathering input, and playing audio.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime) {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            player.HandleInput(Keyboard.GetState());
-
-            ball.Update(gameTime);
-            player.Update(gameTime);
-            computer.Update(gameTime);
-
+            ball.Update(gameTime, gameObjects);
+            player.Update(gameTime, gameObjects);
+            computer.Update(gameTime, gameObjects);
             computer.UpdateBallPosition(ball.Position, ball.Direction);
-
-            CheckCollisions();
-
             score.Update(computer.Score.ToString(), player.Score.ToString());
 
             base.Update(gameTime);
         }
-
-        private void CheckCollisions() {
-            CheckBallWorldCollisions();
-            CheckWorldCollision(player);
-            CheckWorldCollision(computer);
-            CheckBallCollision(player);
-            CheckBallCollision(computer);
-        }
-
-        private void CheckBallWorldCollisions() {
-            if (ball.Position.X > gameWidth) {
-                soundManager.Play("bell");
-                computer.Score++;
-                ball.Reset();
-            }
-            else if (ball.Position.X < 0) {
-                soundManager.Play("bell");
-                player.Score++;
-                ball.Reset();
-            }
-            else if (ball.Position.Y > gameHeight - ball.Height) {
-                soundManager.Play("ping");
-                ball.SetPosition(ball.Position.X, gameHeight - ball.Height);
-                ball.ReverseYDirection();
-            }
-            else if(ball.Position.Y < 0) {
-                soundManager.Play("ping");
-                ball.SetPosition(ball.Position.X, 0);
-                ball.ReverseYDirection();
-            }
-        }
-
-        private void CheckWorldCollision(Paddle paddle) {
-            if (paddle.Position.Y + paddle.Height > gameHeight)
-                paddle.SetPosition(gameHeight - paddle.Height);
-            else if (paddle.Position.Y < 0)
-                paddle.SetPosition(0);
-        }
-
-        private void CheckBallCollision(Paddle paddle) {
-            if (ball.BoundingBox.Intersects(paddle.BoundingBox)) {
-                soundManager.Play("ping");
-                ball.Bounce(paddle);
-            }
-        }
-
-        /// <summary>
-        /// This is called when the game should draw itself.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime) {
             GraphicsDevice.Clear(Color.Black);
 
             spriteBatch.Begin();
-
             DrawDivider(spriteBatch);
-
             score.Draw(spriteBatch);
             player.Draw(spriteBatch);
             computer.Draw(spriteBatch);

@@ -7,67 +7,60 @@ using System.Linq;
 using System.Text;
 
 namespace Pong {
-    public class ComputerPaddle : Paddle {
+    public class ComputerPaddle : Sprite {
         private Vector2 ballPosition;
         private Vector2 ballDirection;
-        private float maxSpeed = 0.25f;
+        private Vector2 maxSpeed = new Vector2(0.25f);
 
         public int Score { get; set; }
 
-        public ComputerPaddle(Texture2D texture2D, Vector2 position)
-            : base(texture2D, position) {
-            this.speed = 0;
+        public ComputerPaddle(Texture2D texture2D, Vector2 position, Rectangle screenBounds)
+            : base(texture2D, position, screenBounds) 
+        {
         }
 
-        public override void Update(GameTime gameTime) {
+        public override void Update(GameTime gameTime, GameObjects gameObjects) 
+        {
             if (this.ballDirection.X < 0) {
                 this.direction = new Vector2(0, 0);
-                this.speed = 0;
+                Velocity = Vector2.Zero;
                 return;
             }
             else if (this.ballPosition.Y + 10 < BoundingBox.Center.Y - 10) { // ball center is above = move up
-                this.speed += 0.05f;
-                if (speed > maxSpeed)
-                    speed = maxSpeed;
+                Velocity += new Vector2(0.05f);
+                if (Velocity.Y > maxSpeed.Y)
+                    Velocity = maxSpeed;
                 this.direction = new Vector2(0, -1);
             }
             else if (this.ballPosition.Y + 10 > BoundingBox.Center.Y + 10) { // ball center is below
-                this.speed += 0.05f;
-                if (speed > maxSpeed)
-                    speed = maxSpeed;
+                Velocity += new Vector2(0.05f);
+                if (Velocity.Y > maxSpeed.Y)
+                    Velocity = maxSpeed;
                 this.direction = new Vector2(0, 1);
             }
-            else if (speed > 0) {
-                speed -= 0.05f;
-                if (speed < 0.1f)
-                    speed = 0;
+            else if (Velocity.Y > 0) {
+                Velocity -= new Vector2(0.05f);
+                if (Velocity.Y < 0.1f)
+                    Velocity = Vector2.Zero;
             }
 
-            position += direction * speed * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            position += direction * Velocity * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+
+            CheckBounds(gameObjects);
         }
 
-        public void UpdateBallPosition(Vector2 ballPosition, Vector2 ballDirection) {
+        public void UpdateBallPosition(Vector2 ballPosition, Vector2 ballDirection) 
+        {
             this.ballPosition = ballPosition;
             this.ballDirection = ballDirection;
         }
 
-        /*
-         * if (KeyState.IsKeyDown(Keys.W)) {
-                this.speed += 0.05f;
-                if(speed > maxSpeed)
-                    speed = maxSpeed;
-                this.direction = new Vector2(0, -1);
-            }
-            else if (KeyState.IsKeyDown(Keys.S)) {
-                this.speed += 0.05f;
-                if(speed > maxSpeed)
-                    speed = maxSpeed;
-                this.direction = new Vector2(0, 1);
-            } else if(speed > 0) {
-                speed -= 0.05f;
-                if (speed < 0.1f)
-                    speed = 0;
-            }
-         * */
+        protected override void CheckBounds(GameObjects gameObjects)
+        {
+            if (Position.Y + Height > screenBounds.Height)
+                SetPosition(screenBounds.Height - Height);
+            else if (Position.Y < 0)
+                SetPosition(0);
+        }
     }
 }
