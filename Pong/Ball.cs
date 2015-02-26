@@ -69,7 +69,6 @@ namespace Pong {
             CheckBallCollision(gameObjects.ComputerPaddle, gameObjects.SoundManager);
         }
         
-        
         protected override void CheckBounds(GameObjects gameObjects)
         {
             var ball = this;
@@ -111,6 +110,5 @@ namespace Pong {
                 ball.Bounce(paddle);
             }
         }
-
     }
 }

@@ -44,5 +44,10 @@ namespace Pong {
         public void SetPosition(int y) {
             this.position.Y = y;
         }
+        public void Dispose()
+        {
+            if(!texture.IsDisposed)
+                texture.Dispose();  
+        }
     }
 }
