@@ -1,10 +1,10 @@
 Pong
 ====
 
-Pong clone made in C# and Monogame/XNA.
-Tested on Windows and Mac.
+* Pong clone made in C# and Monogame/XNA.
+* Tested on Windows and Mac.
 
-Includes:
+* Includes:
   - Sounds
   - Music
   - Very basic game architecture
